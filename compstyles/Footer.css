@@ -1,0 +1,22 @@
+.cs-footer {
+  padding: 24px 32px;
+  border-top: 1px solid #e5e7eb;
+  background-color: #2b3f81;
+  text-align: center;
+}
+
+.cs-footer p {
+  margin: 0 0 8px;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.cs-footer a {
+  color: #2563eb;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.cs-footer a:hover {
+  text-decoration: underline;
+}

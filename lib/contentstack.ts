@@ -91,3 +91,34 @@ export async function getPage(url: string) {
     return entry; // Returning the fetched entry
   }
 }
+// Generic function to fetch singleton entries like Header / Footer
+async function fetchSingletonEntry<
+  T extends contentstack.Utils.EntryModel
+>(contentTypeUid: string): Promise<T | null> {
+  const result = await stack
+    .contentType(contentTypeUid)
+    .entry()
+    .query()
+    .find<T>();
+
+  if (result.entries && result.entries.length > 0) {
+    const entry = result.entries[0];
+
+    if (isPreview) {
+      contentstack.Utils.addEditableTags(entry, contentTypeUid, true);
+    }
+
+    return entry;
+  }
+
+  return null;
+}
+
+
+export async function getHeader() {
+  return fetchSingletonEntry("header");
+}
+
+export async function getFooter() {
+  return fetchSingletonEntry("footer");
+}

@@ -12,6 +12,7 @@
   "homepage": "https://contentstack.com",
   "license": "MIT",
   "scripts": {
+    "tsgen": "csdx tsgen --token-alias pcms --output contentstack/generated.d.ts",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
