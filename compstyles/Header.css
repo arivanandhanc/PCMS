@@ -1,15 +1,41 @@
+/* =========================
+   HEADER CONTAINER
+========================= */
 .cs-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 32px;
-  border-bottom: 1px solid #e5e7eb;
-  background-color: #2b3f81;
+  padding: 1px 24px;              /* controls header height */
+  background: linear-gradient(
+    105deg,
+    rgb(78, 125, 255),
+    rgba(46, 221, 212, 0.856)
+  );
+  position: relative;
+  box-sizing: border-box;
 }
 
-.cs-header__logo img {
-  height: 40px;
+
+/* =========================
+   LOGO
+========================= */
+.cs-header__logo {
+  display: flex;
+  align-items: center;
+}
+
+.cs-header__logo svg {
+  height: 100px;                  /* logo size */
   width: auto;
+  display: block;
+  fill: #000;                    /* change if needed */
+}
+
+/* =========================
+   NAVIGATION (DESKTOP)
+========================= */
+.cs-header__nav {
+  display: flex;
 }
 
 .cs-header__nav ul {
@@ -20,12 +46,81 @@
   padding: 0;
 }
 
+.cs-header__nav li {
+  display: flex;
+}
+
 .cs-header__nav a {
+  color: #000000;
   text-decoration: none;
-  font-weight: 500;
-  color: #111827;
+  font-weight: 900;
+  font-size: 20px;
+    font-family: "Bahnschrift", "Segoe UI", Arial, sans-serif;
 }
 
 .cs-header__nav a:hover {
-  color: #2563eb;
+  color: #000000;
+}
+
+/* =========================
+   HAMBURGER BUTTON
+========================= */
+.cs-header__toggle {
+  display: none;                 /* hidden on desktop */
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: #ffffff;
+  cursor: pointer;
+  padding: 4px;
+}
+
+/* =========================
+   MOBILE STYLES
+========================= */
+@media (max-width: 768px) {
+  .cs-header {
+    padding: 8px 16px;
+  }
+
+  /* Show hamburger */
+  .cs-header__toggle {
+    display: block;
+  }
+
+  /* Hide nav by default */
+  .cs-header__nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: #4571ff;
+    display: none;
+    padding: 12px 0;
+  }
+
+  /* Show nav when open */
+  .cs-header__nav.open {
+    display: block;
+  }
+
+  .cs-header__nav ul {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .cs-header__nav a {
+    font-size: 16px;
+    padding: 8px 0;
+  }
+}
+
+/* =========================
+   SMALL MOBILE (OPTIONAL)
+========================= */
+@media (max-width: 480px) {
+  .cs-header__logo svg {
+    height: 32px;
+  }
 }

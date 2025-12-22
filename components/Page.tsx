@@ -1,5 +1,5 @@
 import Image from "next/image";
-
+import "@/compstyles/page.css";
 interface PageProps {
   page: {
     title: string;
@@ -17,70 +17,46 @@ interface PageProps {
 
 export default function Page({ page }: PageProps) {
   if (!page) {
-    return (
-      <div style={{ padding: "4rem", textAlign: "center" }}>
-        No page data found
-      </div>
-    );
+    return <div className="cs-empty">No page data found</div>;
   }
 
   return (
-    <main
-      style={{
-        maxWidth: "1200px",
-        margin: "0 auto",
-        padding: "2rem",
-      }}
-    >
-      {/* TITLE */}
-      <h1 style={{ fontSize: "2.5rem", marginBottom: "1rem" }}>
-        {page.title}
-      </h1>
+    <main>
+      {/* HERO */}
+    {(page.hero_video?.url || page.hero_image?.url) && (
+  <section className="cs-hero">
+    {page.hero_video?.url ? (
+      <video
+        className="cs-hero__media"
+        autoPlay
+        muted
+        loop
+        playsInline
+      >
+        <source src={page.hero_video.url} />
+      </video>
+    ) : (
+      <Image
+        src={page.hero_image!.url}
+        alt={page.title}
+        fill
+        priority
+        className="cs-hero__media"
+      />
+    )}
 
-      {/* DESCRIPTION */}
-      {page.description && (
-        <p style={{ fontSize: "1.1rem", marginBottom: "2rem" }}>
-          {page.description}
-        </p>
+    <div className="cs-hero__overlay">
+      <h1>{page.title}</h1>
+      {page.description && <p>{page.description}</p>}
+    </div>
+  </section>
       )}
 
-      {/* HERO MEDIA (VIDEO FIRST, IMAGE FALLBACK) */}
-      {page.hero_video?.url ? (
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          style={{
-            width: "100%",
-            maxHeight: "500px",
-            objectFit: "cover",
-            marginBottom: "2rem",
-          }}
-        >
-          <source src={page.hero_video.url} />
-        </video>
-      ) : page.hero_image?.url ? (
-        <Image
-          src={page.hero_image.url}
-          alt={page.hero_image.title || "Hero image"}
-          width={1200}
-          height={600}
-          style={{ marginBottom: "2rem" }}
-        />
-      ) : null}
-
-      {/* BODY TEXT */}
+      {/* PAGE CONTENT */}
       {page.body_text && (
-        <div
-          style={{
-            fontSize: "1rem",
-            lineHeight: 1.6,
-            whiteSpace: "pre-line",
-          }}
-        >
-          {page.body_text}
-        </div>
+        <section className="cs-page__content">
+          <div className="cs-richtext">{page.body_text}</div>
+        </section>
       )}
     </main>
   );

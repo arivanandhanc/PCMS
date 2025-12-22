@@ -12,7 +12,7 @@ export default async function Home() {
   // Safety fallback (prevents blank screen)
   if (!page) {
     return (
-      <div style={{ padding: "4rem", textAlign: "center" }}>
+      <div style={{ padding: "1rem", textAlign: "center" }}>
         ❌ No Page entry found for URL "/"
       </div>
     );
