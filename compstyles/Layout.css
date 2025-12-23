@@ -1,10 +1,9 @@
 .cs-layout {
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
 .cs-layout__main {
   flex: 1;
-  padding: 32px;
+  padding: 10px;
 }

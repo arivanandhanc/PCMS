@@ -5,16 +5,16 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1px 24px;              /* controls header height */
+  padding: 1px 24px;
   background: linear-gradient(
     105deg,
     rgb(78, 125, 255),
     rgba(46, 221, 212, 0.856)
   );
+  top: 0;
   position: relative;
   box-sizing: border-box;
 }
-
 
 /* =========================
    LOGO
@@ -25,10 +25,9 @@
 }
 
 .cs-header__logo svg {
-  height: 100px;                  /* logo size */
+  height: 110px;
   width: auto;
-  display: block;
-  fill: #000;                    /* change if needed */
+  fill: #000;
 }
 
 /* =========================
@@ -41,7 +40,7 @@
 .cs-header__nav ul {
   list-style: none;
   display: flex;
-  gap: 20px;
+  gap: 24px;
   margin: 0;
   padding: 0;
 }
@@ -51,55 +50,55 @@
 }
 
 .cs-header__nav a {
-  color: #000000;
+  color: #000;
   text-decoration: none;
   font-weight: 900;
-  font-size: 20px;
-    font-family: "Bahnschrift", "Segoe UI", Arial, sans-serif;
+  font-size: 18px;
+  font-family: "Bahnschrift", "Segoe UI", Arial, sans-serif;
 }
 
 .cs-header__nav a:hover {
-  color: #000000;
+  opacity: 0.85;
 }
 
 /* =========================
    HAMBURGER BUTTON
 ========================= */
 .cs-header__toggle {
-  display: none;                 /* hidden on desktop */
+  display: none;
   background: none;
   border: none;
   font-size: 28px;
-  color: #ffffff;
+  color: #fff;
   cursor: pointer;
-  padding: 4px;
 }
 
 /* =========================
    MOBILE STYLES
 ========================= */
 @media (max-width: 768px) {
-  .cs-header {
-    padding: 8px 16px;
-  }
-
   /* Show hamburger */
   .cs-header__toggle {
     display: block;
   }
 
-  /* Hide nav by default */
+  /* Hide desktop nav */
   .cs-header__nav {
     position: absolute;
     top: 100%;
     left: 0;
     right: 0;
-    background-color: #4571ff;
+    background: linear-gradient(
+      105deg,
+      rgb(78, 125, 255),
+      rgba(46, 221, 212, 0.95)
+    );
     display: none;
-    padding: 12px 0;
+    z-index: 999;
+    padding: 16px 0;
   }
 
-  /* Show nav when open */
+  /* Open state */
   .cs-header__nav.open {
     display: block;
   }
@@ -107,7 +106,7 @@
   .cs-header__nav ul {
     flex-direction: column;
     align-items: center;
-    gap: 12px;
+    gap: 16px;
   }
 
   .cs-header__nav a {
@@ -117,10 +116,10 @@
 }
 
 /* =========================
-   SMALL MOBILE (OPTIONAL)
+   SMALL MOBILE
 ========================= */
 @media (max-width: 480px) {
   .cs-header__logo svg {
-    height: 32px;
+    height: 100px;
   }
 }

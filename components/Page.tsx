@@ -1,5 +1,6 @@
 import Image from "next/image";
 import "@/compstyles/page.css";
+
 interface PageProps {
   page: {
     title: string;
@@ -22,40 +23,53 @@ export default function Page({ page }: PageProps) {
 
   return (
     <main>
-      {/* HERO */}
-    {(page.hero_video?.url || page.hero_image?.url) && (
-  <section className="cs-hero">
-    {page.hero_video?.url ? (
-      <video
-        className="cs-hero__media"
-        autoPlay
-        muted
-        loop
-        playsInline
-      >
-        <source src={page.hero_video.url} />
-      </video>
-    ) : (
-      <Image
-        src={page.hero_image!.url}
-        alt={page.title}
-        fill
-        priority
-        className="cs-hero__media"
-      />
-    )}
+      {/* 1️⃣ HERO */}
+      {(page.hero_video?.url || page.hero_image?.url) && (
+        <section className="cs-hero">
+          {page.hero_video?.url ? (
+            <video
+              className="cs-hero__media"
+              autoPlay
+              muted
+              loop
+              playsInline
+            >
+              <source src={page.hero_video.url} />
+            </video>
+          ) : (
+            <Image
+              src={page.hero_image!.url}
+              alt={page.title}
+              fill
+              priority
+              className="cs-hero__media"
+            />
+          )}
 
-    <div className="cs-hero__overlay">
-      <h1>{page.title}</h1>
-      {page.description && <p>{page.description}</p>}
-    </div>
-  </section>
+          <div className="cs-hero__overlay">
+            <h1>{page.title}</h1>
+            {page.description && <p>{page.description}</p>}
+          </div>
+        </section>
       )}
 
-      {/* PAGE CONTENT */}
+      {/* 2️⃣ BODY CONTENT */}
       {page.body_text && (
         <section className="cs-page__content">
           <div className="cs-richtext">{page.body_text}</div>
+        </section>
+      )}
+
+      {/* 3️⃣ ANOTHER MEDIA IMAGE (REUSED HERO IMAGE) */}
+      {page.hero_image?.url && (
+        <section className="cs-secondary-media">
+          <Image
+            src={page.hero_image.url}
+            alt={page.hero_image.title || page.title}
+            width={1200}
+            height={700}
+            className="cs-secondary-media__image"
+          />
         </section>
       )}
     </main>
