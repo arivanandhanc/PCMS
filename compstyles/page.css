@@ -61,28 +61,44 @@
    PAGE CONTENT
 ========================= */
 .cs-page__content {
-  max-width: 900px;
-  margin: 4rem auto;
-  padding: 0 1.25rem;
+  max-width: auto;
+  margin: 5rem 2rem;
+  color: black;
+  font-weight: 300;
+   border: 2px solid rgb(0, 0, 0);
+   align-items: center;
+  
 }
 
 .cs-richtext {
-  font-size: 1rem;
-  line-height: 1.7;
-  color: #374151;
+  font-size: 3rem;
+  color: #000000;
+  line-height: 1;
+  
   white-space: pre-line;
+  
+  margin: 3rem 2rem;
+
 }
 
 /* =========================
    SECOND MEDIA IMAGE
 ========================= */
 .cs-secondary-media {
+  display: flex;
+  justify-content: center;  
 }
+
 
 .cs-secondary-media__image {
   width: 100%;
-  height: auto;
+  height: 100%;
   display: block;
   object-fit: cover;
   border-radius: 12px;
+}
+@media (max-width: 768px) {
+  .cs-richtext{
+    font-size: 1.75rem;
+  }
 }

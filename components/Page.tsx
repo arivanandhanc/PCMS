@@ -6,6 +6,7 @@ interface PageProps {
     title: string;
     description?: string;
     body_text?: string;
+    body_text2?: string;
     hero_image?: {
       url: string;
       title?: string;
@@ -22,7 +23,7 @@ export default function Page({ page }: PageProps) {
   }
 
   return (
-    <main>
+    <main className="one">
       {/* 1️⃣ HERO */}
       {(page.hero_video?.url || page.hero_image?.url) && (
         <section className="cs-hero">
@@ -70,6 +71,12 @@ export default function Page({ page }: PageProps) {
             height={700}
             className="cs-secondary-media__image"
           />
+        </section>
+        
+      )}
+      {page.body_text2 && (
+        <section className="cs-page__content">
+          <div className="cs-richtext">{page.body_text2}</div>
         </section>
       )}
     </main>

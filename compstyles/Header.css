@@ -6,11 +6,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 1px 24px;
-  background: linear-gradient(
-    105deg,
-    rgb(78, 125, 255),
-    rgba(46, 221, 212, 0.856)
-  );
+ 
   top: 0;
   position: relative;
   box-sizing: border-box;
@@ -27,7 +23,7 @@
 .cs-header__logo svg {
   height: 110px;
   width: auto;
-  fill: #000;
+  fill: #000000;
 }
 
 /* =========================
@@ -52,9 +48,8 @@
 .cs-header__nav a {
   color: #000;
   text-decoration: none;
-  font-weight: 900;
-  font-size: 18px;
-  font-family: "Bahnschrift", "Segoe UI", Arial, sans-serif;
+   font-size: 1.7rem;
+  color: #000000;
 }
 
 .cs-header__nav a:hover {
