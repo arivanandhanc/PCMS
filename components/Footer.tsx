@@ -1,3 +1,5 @@
+"use client";
+
 import "@/compstyles/Footer.css";
 
 type FooterEntry = {
@@ -15,17 +17,18 @@ type FooterProps = {
   footer: FooterEntry;
 };
 
-
 const Footer = ({ footer }: FooterProps) => {
   return (
     <footer className="cs-footer">
       <div className="cs-footer__inner">
-        {/* Left / Bottom: Copyright */}
-        <p className="cs-footer__copyright">
-          {footer.copyright}
-        </p>
+        {/* Copyright */}
+        {footer.copyright && (
+          <p className="cs-footer__copyright">
+            {footer.copyright}
+          </p>
+        )}
 
-        {/* Right: Links */}
+        {/* CTA Links */}
         {footer.cta && footer.cta.length > 0 && (
           <ul className="cs-footer__links">
             {footer.cta.map((item, index) => (
