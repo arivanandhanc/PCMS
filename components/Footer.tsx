@@ -1,17 +1,20 @@
 import "@/compstyles/Footer.css";
 
-type FooterProps = {
-  footer: {
-    copyright: string;
-    cta?: {
-      name: string;
-      link: {
-        href: string;
-        title?: string;
-      };
-    }[];
-  };
+type FooterEntry = {
+  copyright?: string;
+  cta?: {
+    name: string;
+    link: {
+      href: string;
+      title?: string;
+    };
+  }[];
 };
+
+type FooterProps = {
+  footer: FooterEntry;
+};
+
 
 const Footer = ({ footer }: FooterProps) => {
   return (
