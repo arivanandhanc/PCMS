@@ -3,6 +3,7 @@ import contentstack, { QueryOperation } from "@contentstack/delivery-sdk";
 
 // Importing Contentstack Live Preview utilities and stack SDK 
 import ContentstackLivePreview, { IStackSdk } from "@contentstack/live-preview-utils";
+import type { SubPages } from "@/contentstack/generated";
 
 // Importing the Page type definition 
 import { Page } from "./types";
@@ -91,6 +92,38 @@ export async function getPage(url: string) {
     return entry; // Returning the fetched entry
   }
 }
+
+export async function getSubPage(
+  url: string
+): Promise<SubPages | null> {
+  const result = await stack
+    .contentType("sub_pages")
+    .entry()
+    .query()
+    .where("url", QueryOperation.EQUALS, url)
+    .find<SubPages>();
+
+  if (result.entries?.length) {
+    const entry = result.entries[0];
+
+    if (isPreview) {
+      contentstack.Utils.addEditableTags(
+        entry as unknown as { uid: string },
+        "sub_pages",
+        true
+      );
+    }
+
+    return entry;
+  }
+
+  return null;
+}
+
+
+
+
+
 // Generic function to fetch singleton entries like Header / Footer
 async function fetchSingletonEntry<
   T extends contentstack.Utils.EntryModel
@@ -122,3 +155,5 @@ export async function getHeader() {
 export async function getFooter() {
   return fetchSingletonEntry("footer");
 }
+
+

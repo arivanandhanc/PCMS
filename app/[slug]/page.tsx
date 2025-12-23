@@ -1,6 +1,5 @@
 import { getPage } from "@/lib/contentstack";
 import Page from "@/components/Page";
-
 export default async function SlugPage({
   params,
 }: {
@@ -16,7 +15,7 @@ export default async function SlugPage({
   if (!page) {
     return (
       <div style={{ padding: "4rem", textAlign: "center" }}>
-        ❌ No Page entry found for URL "{url}"
+        ❌ No Page entry found for URL "{url}"/about/sub-pages/about
       </div>
     );
   }

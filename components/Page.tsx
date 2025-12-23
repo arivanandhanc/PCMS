@@ -1,21 +1,18 @@
 import Image from "next/image";
 import "@/compstyles/page.css";
+import type { Page as PageEntry } from "@/contentstack/generated";
 
-interface PageProps {
-  page: {
-    title: string;
-    description?: string;
-    body_text?: string;
-    body_text2?: string;
-    hero_image?: {
-      url: string;
-      title?: string;
-    };
-    hero_video?: {
-      url: string;
-    };
-  };
-}
+type PageProps = {
+  page: Pick<
+    PageEntry,
+    | "title"
+    | "description"
+    | "hero_image"
+    | "hero_video"
+    | "body_text"
+    | "body_text2"
+  > | null;
+};
 
 export default function Page({ page }: PageProps) {
   if (!page) {
@@ -24,7 +21,6 @@ export default function Page({ page }: PageProps) {
 
   return (
     <main className="one">
-      {/* 1️⃣ HERO */}
       {(page.hero_video?.url || page.hero_image?.url) && (
         <section className="cs-hero">
           {page.hero_video?.url ? (
@@ -38,13 +34,15 @@ export default function Page({ page }: PageProps) {
               <source src={page.hero_video.url} />
             </video>
           ) : (
-            <Image
-              src={page.hero_image!.url}
-              alt={page.title}
-              fill
-              priority
-              className="cs-hero__media"
-            />
+            page.hero_image?.url && (
+              <Image
+                src={page.hero_image.url}
+                alt={page.title}
+                fill
+                priority
+                className="cs-hero__media"
+              />
+            )
           )}
 
           <div className="cs-hero__overlay">
@@ -54,14 +52,12 @@ export default function Page({ page }: PageProps) {
         </section>
       )}
 
-      {/* 2️⃣ BODY CONTENT */}
       {page.body_text && (
         <section className="cs-page__content">
           <div className="cs-richtext">{page.body_text}</div>
         </section>
       )}
 
-      {/* 3️⃣ ANOTHER MEDIA IMAGE (REUSED HERO IMAGE) */}
       {page.hero_image?.url && (
         <section className="cs-secondary-media">
           <Image
@@ -69,11 +65,10 @@ export default function Page({ page }: PageProps) {
             alt={page.hero_image.title || page.title}
             width={1200}
             height={700}
-            className="cs-secondary-media__image"
           />
         </section>
-        
       )}
+
       {page.body_text2 && (
         <section className="cs-page__content">
           <div className="cs-richtext">{page.body_text2}</div>

@@ -1,41 +1,31 @@
 "use client";
 
 import "@/compstyles/Footer.css";
-
-type FooterEntry = {
-  copyright?: string;
-  cta?: {
-    name: string;
-    link: {
-      href: string;
-      title?: string;
-    };
-  }[];
-};
+import type { Footer as FooterEntry } from "@/contentstack/generated";
 
 type FooterProps = {
-  footer: FooterEntry;
+  footer: Pick<FooterEntry, "copyright" | "cta">;
 };
 
 const Footer = ({ footer }: FooterProps) => {
   return (
     <footer className="cs-footer">
       <div className="cs-footer__inner">
-        {/* Copyright */}
         {footer.copyright && (
           <p className="cs-footer__copyright">
             {footer.copyright}
           </p>
         )}
 
-        {/* CTA Links */}
-        {footer.cta && footer.cta.length > 0 && (
+        {footer.cta?.length && (
           <ul className="cs-footer__links">
             {footer.cta.map((item, index) => (
               <li key={index}>
-                <a href={item.link.href}>
-                  {item.name}
-                </a>
+                {item.link && (
+                  <a href={item.link.href}>
+                    {item.name}
+                  </a>
+                )}
               </li>
             ))}
           </ul>

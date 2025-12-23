@@ -10,22 +10,21 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [headerRaw, footerRaw] = await Promise.all([
+  const [headerEntry, footerEntry] = await Promise.all([
     getHeader(),
     getFooter(),
   ]);
 
-  // 🔽 Map CMS footer → UI footer (IMPORTANT)
-  const footer = footerRaw
+  const header = headerEntry
     ? {
-        copyright: footerRaw.copyright,
-        cta: footerRaw.cta?.map((item: any) => ({
-          name: item.name,
-          link: {
-            href: item.link?.href,
-            title: item.link?.title,
-          },
-        })),
+        links_group: headerEntry.links_group,
+      }
+    : null;
+
+  const footer = footerEntry
+    ? {
+        copyright: footerEntry.copyright,
+        cta: footerEntry.cta,
       }
     : null;
 
@@ -33,7 +32,7 @@ export default async function RootLayout({
     <html lang="en">
       <body>
         <div className="cs-layout">
-          {headerRaw && <Header header={headerRaw} />}
+          {header && <Header header={header} />}
 
           <main className="cs-layout__main">
             {children}

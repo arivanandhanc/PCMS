@@ -54,6 +54,22 @@ export interface Taxonomy {
 
 export type TaxonomyEntry = Taxonomy & { term_uid: string };
 
+export interface Media {
+  /** Version */
+  _version?: number;
+  /** Media */
+  media?: File | null;
+}
+
+export interface Cta {
+  /** Version */
+  _version?: number;
+  /** Name */
+  name?: string;
+  /** Link */
+  link?: Link;
+}
+
 /** A block! */
 export interface Block {
   /** Version */
@@ -68,6 +84,48 @@ export interface Block {
   layout?: ("image_left" | "image_right") | null;
 }
 
+export interface SubPages {
+  /** Version */
+  _version?: number;
+  /** Title */
+  title: string;
+  /** URL */
+  url?: string;
+  /** Group */
+  group?: {
+    /** Titlefield */
+    titlefield?: string;
+    /** Media */
+    media?: Media[];
+    /** Descriptions */
+    descriptions?: string[];
+    /** Quote */
+    quote?: string;
+  };
+  /** Quote */
+  quote?: string;
+}
+
+/** Simple page with hero image or video */
+export interface Page {
+  /** Version */
+  _version?: number;
+  /** Title */
+  title: string;
+  /** URL */
+  url: string;
+  /** Description */
+  description?: string;
+  /** Hero Image */
+  hero_image?: File | null;
+  /** Hero Video */
+  hero_video?: File | null;
+  /** Body Text */
+  body_text?: string;
+  /** Body Text II */
+  body_text2?: string;
+}
+
 export interface Footer {
   /** Version */
   _version?: number;
@@ -75,8 +133,8 @@ export interface Footer {
   title: string;
   /** Copyright */
   copyright?: string;
-  /** URL */
-  url?: string;
+  /** CTA */
+  cta?: Cta[];
 }
 
 /** This content type use to handle header content entry */
@@ -96,25 +154,4 @@ export interface Header {
     /** Link1 */
     link1?: Link;
   };
-}
-
-export interface Blocks {
-  block: Block;
-}
-
-export interface Page {
-  /** Version */
-  _version?: number;
-  /** Title */
-  title: string;
-  /** URL */
-  url?: string;
-  /** Description */
-  description?: string;
-  /** Image */
-  image?: File | null;
-  /** Rich Text */
-  rich_text?: string;
-  /** blocks */
-  blocks?: Blocks[];
 }
