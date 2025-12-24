@@ -19,28 +19,22 @@ export default function SubPage({ page }: SubPageProps) {
   return (
     <main className="one">
       <section className="cs-page__content">
+  {group?.media?.map((item, idx) =>
+    item.media?.url ? (
+      <figure key={idx} className={`cs-media cs-media--${idx % 3}`}>
+        <Image
+          src={item.media.url}
+          alt={item.media.title || ""}
+          width={600}
+          height={600}
+        />
+      </figure>
+    ) : null
+  )}
 
-       
-
-        {group?.media?.length && (
-          <div className="cs-media-grid">
-            {group.media.map((item, idx) =>
-              item.media?.url ? (
-                <Image
-                  key={idx}
-                  src={item.media.url}
-                  alt={item.media.title || ""}
-                  width={400}
-                  height={400}
-                />
-              ) : null
-            )}
-          </div>
-        )}
-
-        {group?.descriptions?.map((desc, i) => (
-          <p key={i}>{desc}</p>
-        ))}
+  {group?.descriptions?.map((desc, i) => (
+    <p key={i}>{desc}</p>
+  ))}
 
         {group?.quote && (
           <div

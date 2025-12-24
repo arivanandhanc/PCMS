@@ -16,10 +16,19 @@ export default async function RootLayout({
   ]);
 
   const header = headerEntry
-    ? {
-        links_group: headerEntry.links_group,
-      }
-    : null;
+  ? {
+      links_group: headerEntry.links_group
+        ? {
+            links: Array.isArray(headerEntry.links_group.links)
+              ? headerEntry.links_group.links
+              : headerEntry.links_group.links
+              ? [headerEntry.links_group.links]
+              : [],
+          }
+        : undefined,
+    }
+  : null;
+
 
   const footer = footerEntry
     ? {

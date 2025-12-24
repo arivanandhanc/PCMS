@@ -150,8 +150,6 @@ export interface Header {
   /** Links Group */
   links_group?: {
     /** Links */
-    links?: Link;
-    /** Link1 */
-    link1?: Link;
+    links?: Link[];
   };
 }

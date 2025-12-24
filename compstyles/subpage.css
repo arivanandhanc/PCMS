@@ -1,130 +1,70 @@
 /* =========================
-   Base Layout
-   ========================= */
-
-.one {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
-
+   SUB PAGE LAYOUT
+========================= */
 .cs-page__content {
-  width: 100%;
-  max-width: 1100px;
-  padding: 0.1rem;
-  line-height: 1.65;
-  color: #111;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: start;
 }
 
 /* =========================
-   Typography
-   ========================= */
-
-.cs-page__content h1 {
-  font-size: clamp(2.2rem, 4vw, 3.2rem);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  margin-bottom: 1.25rem;
-}
-
-.cs-page__content h2 {
-  font-size: clamp(1.4rem, 2.5vw, 1.9rem);
-  font-weight: 600;
-  margin: 2.5rem 0 1rem;
-  color: #222;
-}
-
-.cs-page__content p {
-  max-width: auto;
-  margin: 5rem 2rem;
-  color: black;
-  font-weight: 300;
-  padding: 2rem;
-   border: 2px solid rgb(0, 0, 0);
-   align-items: center;
-   font-size: 2rem;
-}
-
-/* =========================
-   Media Grid
-   ========================= */
-
+   MEDIA GRID
+========================= */
 .cs-media-grid {
   display: grid;
-  margin: 1rem 0;
-   display: flex;
-  justify-content: center;  
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  
 }
 
 .cs-media-grid img {
-   display: flex;
-  justify-content: center;  
-  width: 50rem;      /* increase size */
-  height: auto;  
-}
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 
-.cs-media-grid img:hover {
-  transform: translateY(-20px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
 /* =========================
-   Quotes
-   ========================= */
-
-.cs-quote {
-  margin: 3rem 0;
-  padding: 2rem 2.5rem;background: linear-gradient(
-    105deg,rgba(46, 221, 212, 0.856),
-    rgb(78, 125, 255)
-    
-  );
-  border-left: 5px solid #000;
-  font-size: 1.15rem;
-  color: #222;
-  position: relative;
-}
-
-.cs-quote::before {
-  content: "“";
-  position: absolute;
-  top: -10px;
-  left: 12px;
-  font-size: 4rem;
-  color: rgba(0, 0, 0, 0.1);
-  font-family: serif;
-}
-
-/* =========================
-   Empty State
-   ========================= */
-
-.cs-empty {
-  padding: 5rem 2rem;
-  text-align: center;
+   TEXT CONTENT
+========================= */
+.cs-page__content p {
   font-size: 1.2rem;
-  color: #777;
+  line-height: 1.8;
+  margin-bottom: 1.2rem;
+  color: #222;
+  font-weight: 600;
+  padding: 1.5rem;     
+  border: 2px solid rgb(0, 0, 0);
 }
 
 /* =========================
-   Responsive Tweaks
-   ========================= */
-
-@media (max-width: 768px) {
-  .cs-page__content {
-    padding: 2rem 1.25rem;
-  }
-
-  .cs-quote {
-    padding: 1.5rem 1.75rem;
-  }
-  .cs-page__content p {
-  max-width: auto;
-  color: black;
-  font-weight: 400;
-  padding: rem;
-   border: 2px solid rgb(0, 0, 0);
-   align-items: center;
-   font-size: 1rem;
+   QUOTE
+========================= */
+.cs-quote {
+  margin-top: 2rem;
+  padding-left: 1.5rem;
+  border-left: 4px solid #000;
+  font-style: italic;
+  opacity: 0.85;
 }
+
+/* =========================
+   MOBILE
+========================= */
+@media (max-width: 900px) {
+  .cs-page__content {
+    grid-template-columns: 1fr;
+  }
+  .cs-page__content p{
+    font-size: 1rem;
+    font-weight: 600;
+  }
+  
 }
