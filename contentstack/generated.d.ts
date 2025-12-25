@@ -84,6 +84,24 @@ export interface Block {
   layout?: ("image_left" | "image_right") | null;
 }
 
+export interface Tcaresol {
+  /** Version */
+  _version?: number;
+  /** Title */
+  title: string;
+  /** texts */
+  texts?: string[];
+}
+
+export interface Icaresol {
+  /** Version */
+  _version?: number;
+  /** Title */
+  title: string;
+  /** Imiage */
+  imiage?: File[] | null;
+}
+
 export interface SubPages {
   /** Version */
   _version?: number;
@@ -120,6 +138,8 @@ export interface Page {
   hero_image?: File | null;
   /** Hero Video */
   hero_video?: File | null;
+  /** Caresol */
+  caresol?: Tcaresol[];
   /** Body Text */
   body_text?: string;
   /** Body Text II */

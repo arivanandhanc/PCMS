@@ -76,22 +76,17 @@ export function initLivePreview() {
 // Function to fetch page data based on the URL
 export async function getPage(url: string) {
   const result = await stack
-    .contentType("page") // Specifying the content type as "page"
-    .entry() // Accessing the entry
-    .query() // Creating a query
-    .where("url", QueryOperation.EQUALS, url) // Filtering entries by URL
-    .find<Page>(); // Executing the query and expecting a result of type Page
+    .contentType("page")
+    .entry()
+    .includeReference("caresol")   // ⭐ this is correct for your SDK
+    .query()
+    .where("url", QueryOperation.EQUALS, url)
+    .find<Page>();
 
-  if (result.entries) {
-    const entry = result.entries[0]; // Getting the first entry from the result
-
-    if (isPreview) {
-      contentstack.Utils.addEditableTags(entry, 'page', true); // Adding editable tags for live preview if enabled
-    }
-
-    return entry; // Returning the fetched entry
-  }
+  if (result.entries?.length) return result.entries[0];
+  return null;
 }
+
 
 export async function getSubPage(
   url: string

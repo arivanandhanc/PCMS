@@ -1,9 +1,13 @@
 import Image from "next/image";
 import "@/compstyles/page.css";
 import type { Page as PageEntry } from "@/contentstack/generated";
+import { Tcaresol } from "@/contentstack/generated";
+
+// ⭐ You already have this file:
+import TcaresolComponent from "@/components/tcaresol";
 
 type PageProps = {
-  page: Pick<
+  page: (Pick<
     PageEntry,
     | "title"
     | "description"
@@ -11,26 +15,22 @@ type PageProps = {
     | "hero_video"
     | "body_text"
     | "body_text2"
-  > | null;
+    | "caresol"
+  > & {
+    caresol?: Tcaresol[]; // typed correctly
+  }) | null;
 };
 
 export default function Page({ page }: PageProps) {
-  if (!page) {
-    return <div className="cs-empty">No page data found</div>;
-  }
+  if (!page) return <div className="cs-empty">No page data found</div>;
 
   return (
     <main className="one">
+      {/* ---------------- HERO SECTION ---------------- */}
       {(page.hero_video?.url || page.hero_image?.url) && (
         <section className="cs-hero">
           {page.hero_video?.url ? (
-            <video
-              className="cs-hero__media"
-              autoPlay
-              muted
-              loop
-              playsInline
-            >
+            <video className="cs-hero__media" autoPlay muted loop playsInline>
               <source src={page.hero_video.url} />
             </video>
           ) : (
@@ -52,12 +52,37 @@ export default function Page({ page }: PageProps) {
         </section>
       )}
 
+      {/* ---------------- BODY TEXT BLOCKS ---------------- */}
       {page.body_text && (
         <section className="cs-page__content">
           <div className="cs-richtext">{page.body_text}</div>
         </section>
       )}
 
+      {/* ---------------- TEXT CAROUSEL SECTION ---------------- */}
+{Array.isArray(page.caresol) && page.caresol.length > 0 && (
+  [...page.caresol]
+    .sort((a: any, b: any) => {
+      const getPos = (entry: any) => {
+        const firstBlock = entry?.texts?.[0] || "";
+        const match = typeof firstBlock === "string"
+          ? firstBlock.match(/pos-(\d+)/)
+          : firstBlock?.attrs?.class?.match(/pos-(\d+)/);
+
+        return match ? Number(match[1]) : 999;
+      };
+      return getPos(a) - getPos(b);
+    })
+    .map((item, i) => (
+      <section key={i} className="cs-carousel-section">
+        <TcaresolComponent {...item} />
+      </section>
+    ))
+)}
+
+
+
+      {/* ---------------- IMAGE BLOCK ---------------- */}
       {page.hero_image?.url && (
         <section className="cs-secondary-media">
           <Image
@@ -69,6 +94,7 @@ export default function Page({ page }: PageProps) {
         </section>
       )}
 
+      {/* ---------------- BOTTOM BODY TEXT ---------------- */}
       {page.body_text2 && (
         <section className="cs-page__content">
           <div className="cs-richtext">{page.body_text2}</div>
