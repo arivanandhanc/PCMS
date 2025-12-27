@@ -1,6 +1,6 @@
 import "@/app/globals.css";
 import "@/compstyles/Layout.css";
-
+export const dynamic = "force-dynamic";
 import { getHeader, getFooter } from "@/lib/contentstack";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";

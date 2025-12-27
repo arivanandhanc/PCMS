@@ -1,6 +1,6 @@
 // Importing Contentstack SDK and specific types for region and query operations
 import contentstack, { QueryOperation } from "@contentstack/delivery-sdk";
-
+export const dynamic = "force-dynamic";
 // Importing Contentstack Live Preview utilities and stack SDK 
 import ContentstackLivePreview, { IStackSdk } from "@contentstack/live-preview-utils";
 import type { SubPages } from "@/contentstack/generated";

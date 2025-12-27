@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import "@/compstyles/page.css";
 import type { Page as PageEntry } from "@/contentstack/generated";

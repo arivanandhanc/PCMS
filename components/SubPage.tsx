@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import "@/compstyles/subpage.css";
 import type { SubPages } from "@/contentstack/generated";

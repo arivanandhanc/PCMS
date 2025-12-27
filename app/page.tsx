@@ -1,6 +1,6 @@
 // Importing function to fetch page data from Contentstack
 import { getPage } from "@/lib/contentstack";
-
+export const dynamic = "force-dynamic";
 // Importing the Page component to render page content
 import Page from "@/components/Page";
 

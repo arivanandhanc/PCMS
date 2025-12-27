@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { getPage } from "@/lib/contentstack";
 import Page from "@/components/Page";
 export default async function SlugPage({

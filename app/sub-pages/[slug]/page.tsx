@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { getSubPage } from "@/lib/contentstack";
 import SubPage from "@/components/SubPage";
 import type { SubPages } from "@/contentstack/generated";
