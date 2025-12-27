@@ -50,6 +50,18 @@ export const stack = contentstack.stack({
     host: process.env.NEXT_PUBLIC_CONTENTSTACK_PREVIEW_HOST || endpoints && endpoints.preview
   }
 });
+export async function fetchContentstack(url: string) {
+  const res = await fetch(url, {
+    headers: {
+      api_key: process.env.CONTENTSTACK_API_KEY!,
+      access_token: process.env.CONTENTSTACK_DELIVERY_TOKEN!,
+    },
+    cache: "no-store",            // ❗ Force fresh content
+    next: { revalidate: 0 },       // ❗ Disable stale caching in Vercel
+  });
+
+  return res.json();
+}
 
 // Initialize live preview functionality
 export function initLivePreview() {
