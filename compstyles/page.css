@@ -87,6 +87,7 @@
 .cs-secondary-media {
   display: flex;
   justify-content: center;  
+  
 }
 
 
@@ -100,8 +101,15 @@
 @media (max-width: 768px) {
   .cs-richtext{
     font-size: 1.75rem;
+    
   }
+  .cs-carousel-section {
+  margin: 2rem;
+}
 }
 .cs-carousel-section {
-  margin: 1rem 0;
+  margin: 1rem 0rem;
+  margin-left: 2rem;
+  margin-right: 2rem;
+  
 }
