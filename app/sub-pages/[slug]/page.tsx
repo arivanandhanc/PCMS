@@ -8,7 +8,6 @@ export default async function SubSlugPage({
 }: {
   params: Promise<{ slug: string }>;
 }) {
-  // ✅ unwrap params FIRST
   const { slug } = await params;
 
   const url = `/${slug}`;
@@ -18,12 +17,11 @@ export default async function SubSlugPage({
   if (!page) {
     return (
       <div style={{ padding: "4rem", textAlign: "center" }}>
-        ❌ No SubPage entry found
+        No SubPage entry found
       </div>
     );
   }
 
-  // ✅ shape data exactly like Page / Header / Footer pattern
   const pageProps = {
     title: page.title,
     group: page.group,

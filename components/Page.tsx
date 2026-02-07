@@ -3,6 +3,7 @@ import Image from "next/image";
 import "@/compstyles/page.css";
 import type { Page as PageEntry } from "@/contentstack/generated";
 import { Tcaresol } from "@/contentstack/generated";
+import ContactForm from "@/components/ContactForm";
 
 // ⭐ You already have this file:
 import TcaresolComponent from "@/components/tcaresol";
@@ -94,12 +95,17 @@ export default function Page({ page }: PageProps) {
           />
         </section>
       )}
+{/* ---------------- CONTACT FORM ---------------- */}
+<section className="cs-form-section">
+  <ContactForm />
+</section>
 
       {/* ---------------- BOTTOM BODY TEXT ---------------- */}
       {page.body_text2 && (
         <section className="cs-page__content">
           <div className="cs-richtext">{page.body_text2}</div>
         </section>
+        
       )}
     </main>
   );

@@ -1,3 +1,5 @@
+//to synce "csdx tsgen -a pcms -o \contentstack\generated.d.ts -p I --include-referenced-entry --include-system-fields "
+
 type BuildTuple<T, N extends number, R extends T[] = []> = R["length"] extends N
   ? R
   : BuildTuple<T, N, [...R, T]>;

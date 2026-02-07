@@ -1,96 +1,45 @@
-// Importing Contentstack SDK and specific types for region and query operations
+
 import contentstack, { QueryOperation } from "@contentstack/delivery-sdk";
 export const dynamic = "force-dynamic";
-// Importing Contentstack Live Preview utilities and stack SDK 
 import ContentstackLivePreview, { IStackSdk } from "@contentstack/live-preview-utils";
 import type { SubPages } from "@/contentstack/generated";
-
-// Importing the Page type definition 
 import { Page } from "./types";
-
-// helper functions from private package to retrieve Contentstack endpoints in a convienient way
 import { getContentstackEndpoints, getRegionForString } from "@timbenniks/contentstack-endpoints";
 
 export const isPreview = process.env.NEXT_PUBLIC_CONTENTSTACK_PREVIEW === "true";
 
-// Set the region by string value from environment variables
 const region = getRegionForString(process.env.NEXT_PUBLIC_CONTENTSTACK_REGION as string)
 
-// object with all endpoints for region.
 const endpoints = getContentstackEndpoints(region, true)
 
 export const stack = contentstack.stack({
-  // Setting the API key from environment variables
   apiKey: process.env.NEXT_PUBLIC_CONTENTSTACK_API_KEY as string,
-
-  // Setting the delivery token from environment variables
   deliveryToken: process.env.NEXT_PUBLIC_CONTENTSTACK_DELIVERY_TOKEN as string,
-
-  // Setting the environment based on environment variables
   environment: process.env.NEXT_PUBLIC_CONTENTSTACK_ENVIRONMENT as string,
-
-  // Setting the region
-  // if the region doesnt exist, fall back to a custom region given by the env vars
-  // for internal testing purposes at Contentstack we look for a custom region in the env vars, you do not have to do this.
   region: region ? region : process.env.NEXT_PUBLIC_CONTENTSTACK_REGION as any,
-
-  // Setting the host for content delivery based on the region or environment variables
-  // This is done for internal testing purposes at Contentstack, you can omit this if you have set a region above.
   host: process.env.NEXT_PUBLIC_CONTENTSTACK_CONTENT_DELIVERY || endpoints && endpoints.contentDelivery,
-
-  live_preview: {
-    // Enabling live preview if specified in environment variables
-    enable: process.env.NEXT_PUBLIC_CONTENTSTACK_PREVIEW === 'true',
-
-    // Setting the preview token from environment variables
-    preview_token: process.env.NEXT_PUBLIC_CONTENTSTACK_PREVIEW_TOKEN,
-
-    // Setting the host for live preview based on the region
-    // for internal testing purposes at Contentstack we look for a custom host in the env vars, you do not have to do this.
-    host: process.env.NEXT_PUBLIC_CONTENTSTACK_PREVIEW_HOST || endpoints && endpoints.preview
-  }
 });
+
 export async function fetchContentstack(url: string) {
   const res = await fetch(url, {
     headers: {
       api_key: process.env.CONTENTSTACK_API_KEY!,
       access_token: process.env.CONTENTSTACK_DELIVERY_TOKEN!,
     },
-    cache: "no-store",            // ❗ Force fresh content
-    next: { revalidate: 0 },       // ❗ Disable stale caching in Vercel
+    cache: "no-store",            //  Force fresh content
+    next: { revalidate: 0 },       //  Disable stale caching in Vercel
   });
 
   return res.json();
 }
 
-// Initialize live preview functionality
-export function initLivePreview() {
-  ContentstackLivePreview.init({
-    ssr: false, // Disabling server-side rendering for live preview
-    enable: process.env.NEXT_PUBLIC_CONTENTSTACK_PREVIEW === 'true', // Enabling live preview if specified in environment variables
-    mode: "builder", // Setting the mode to "builder" for visual builder
-    stackSdk: stack.config as IStackSdk, // Passing the stack configuration
-    stackDetails: {
-      apiKey: process.env.NEXT_PUBLIC_CONTENTSTACK_API_KEY as string, // Setting the API key from environment variables
-      environment: process.env.NEXT_PUBLIC_CONTENTSTACK_ENVIRONMENT as string, // Setting the environment from environment variables
-    },
-    clientUrlParams: {
-      // Setting the client URL parameters for live preview
-      // for internal testing purposes at Contentstack we look for a custom host in the env vars, you do not have to do this.
-      host: process.env.NEXT_PUBLIC_CONTENTSTACK_CONTENT_APPLICATION || endpoints && endpoints.application
-    },
-    editButton: {
-      enable: true, // Enabling the edit button for live preview
-      exclude: ["outsideLivePreviewPortal"] // Excluding the edit button from the live preview portal
-    },
-  });
-}
+
 // Function to fetch page data based on the URL
 export async function getPage(url: string) {
   const result = await stack
     .contentType("page")
     .entry()
-    .includeReference("caresol")   // ⭐ this is correct for your SDK
+    .includeReference("caresol")   
     .query()
     .where("url", QueryOperation.EQUALS, url)
     .find<Page>();
@@ -128,10 +77,6 @@ export async function getSubPage(
 }
 
 
-
-
-
-// Generic function to fetch singleton entries like Header / Footer
 async function fetchSingletonEntry<
   T extends contentstack.Utils.EntryModel
 >(contentTypeUid: string): Promise<T | null> {

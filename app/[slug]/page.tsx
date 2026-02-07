@@ -16,7 +16,7 @@ export default async function SlugPage({
   if (!page) {
     return (
       <div style={{ padding: "4rem", textAlign: "center" }}>
-        ❌ No Page entry found for URL "{url}"/about/sub-pages/about
+        No Page entry found for URL "{url}"
       </div>
     );
   }

@@ -1,6 +1,9 @@
 "use client";
 import "@/compstyles/tcaresol.css";
 import { Tcaresol } from "@/contentstack/generated";
+import { decode } from "html-entities";
+
+
 
 const TcaresolComponent = (entry: Tcaresol) => {
   const raw = entry.texts || [];
@@ -14,11 +17,11 @@ const TcaresolComponent = (entry: Tcaresol) => {
     const classMatch = html.match(/class="([^"]+)"/)?.[1] || "";
 
     // Clean text content fully
-    const cleaned = html
-      .replace(/&nbsp;|&#160;/gi, " ")  // remove non-breaking spaces
-      .replace(/<\/?[^>]+(>|$)/g, "")  // remove HTML tags
-      .replace(/\s+/g, " ")            // normalize extra spaces
-      .trim();
+  const cleaned = decode(html)
+  .replace(/&nbsp;|&#160;/gi, " ")
+  .replace(/<\/?[^>]+(>|$)/g, "")
+  .replace(/\s+/g, " ")
+  .trim();
 
     return {
       id: idMatch,
