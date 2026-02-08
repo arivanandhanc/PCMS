@@ -30,3 +30,7 @@ export function removeFromCart(uid: string) {
 export function getCartCount() {
   return getCart().reduce((sum: number, i: any) => sum + (i.qty || 1), 0);
 }
+export const clearCart = () => {
+  localStorage.removeItem("cart");
+  window.dispatchEvent(new Event("cart-updated"));
+};
