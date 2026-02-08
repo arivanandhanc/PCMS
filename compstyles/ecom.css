@@ -1,0 +1,123 @@
+/* COMMON */
+.ecom-section {
+  padding: 80px 60px;
+}
+
+.ecom-inner {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+}
+
+/* ------------------ OPTION 1 : BACKGROUND DIM CENTER ------------------ */
+
+.ecom-section.layout-overlay {
+  min-height: 85vh;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ecom-section.layout-overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.ecom-section.layout-overlay .ecom-inner {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: white;
+  max-width: 700px;
+  flex-direction: column;
+}
+
+/* ------------------ OPTION 2 : IMAGE LEFT CONTENT RIGHT ------------------ */
+
+/* ------------------ OPTION 2 : IMAGE LEFT CONTENT RIGHT ------------------ */
+
+.ecom-section.layout-split {
+  background: #f4f7fb;
+  display: flex;
+  justify-content: center;
+}
+
+.ecom-section.layout-split .ecom-inner {
+  max-width: 1200px;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.ecom-section.layout-split .ecom-image {
+  flex: 0 0 520px;
+}
+
+.ecom-section.layout-split .ecom-image img {
+  width: 100%;
+  height: 320px;
+  border-radius: 14px;
+  object-fit: cover;
+}
+
+.ecom-section.layout-split .ecom-content {
+  flex: 2;
+  padding-left: 60px;
+}
+
+/* ------------------ CONTENT ------------------ */
+
+.ecom-description {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.ecom-btn {
+  padding: 12px 28px;
+  text-decoration: none;
+  display: inline-block;
+  font-weight: 600;
+  border-radius: 6px;
+}
+
+.ecom-btn.white {
+  background: white;
+  color: black;
+}
+
+.ecom-btn.Blue {
+  background: #005bb5;
+  color: white;
+}
+
+/* REMOVE SIDE WHITESPACE ONLY FOR SPLIT LAYOUT */
+
+.ecom-section.layout-split {
+  padding: 0;                 /* remove section padding */
+  background: #f4f7fb;
+}
+
+.ecom-section.layout-split .ecom-inner {
+  max-width: 100%;
+  gap: 0;                     /* remove gap between image & content */
+}
+
+.ecom-section.layout-split .ecom-image {
+  flex: 0 0 50%;
+}
+
+.ecom-section.layout-split .ecom-image img {
+  width: 100%;
+  height: 100%;
+  border-radius: 0;           /* remove rounded corners */
+  object-fit: cover;
+}
+
+.ecom-section.layout-split .ecom-content {
+  flex: 0 0 50%;
+  padding: 80px 60px;         /* padding ONLY for text side */
+}

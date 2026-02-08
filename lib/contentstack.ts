@@ -108,4 +108,71 @@ export async function getFooter() {
   return fetchSingletonEntry("footer");
 }
 
+// PLP
+export async function getProductList() {
+  const result = await stack
+    .contentType("plp")
+    .entry()
+    .includeReference("products")
+    .query()
+    .find<any>();
 
+  if (result.entries?.length) {
+    return result.entries[0];
+  }
+
+  return null;
+}
+
+// PDP by UID (used by PLP)
+export async function getProductByUid(uid: string) {
+  const entry = await stack
+    .contentType("pdp")
+    .entry(uid)
+    .fetch();
+
+  return entry;
+}
+
+// PDP by slug (used by PDP page)
+export async function getProductBySlug(slug: string) {
+  const result = await stack
+    .contentType("pdp")
+    .entry()
+    .query()
+    .where("slug", QueryOperation.EQUALS, slug)
+    .find<any>();
+
+  if (!result.entries?.length) return null;
+
+  const uid = result.entries[0].uid;
+
+  const fullEntry = await stack
+    .contentType("pdp")
+    .entry(uid)
+    .fetch();
+
+  return fullEntry;
+}
+
+
+
+
+// ✅ ECOM PAGE (separate from normal Page CT)
+export async function getEcomPage(url: string) {
+  const result = await stack
+    .contentType("ecomprimary")
+    .entry()
+    .includeEmbeddedItems()           // for Global field (sections)
+    .includeReference("sections.button")
+    .includeReference("sections.background")
+    .query()
+    .where("url", QueryOperation.EQUALS, url)
+    .find<any>();
+
+  if (result.entries?.length) {
+    return result.entries[0];
+  }
+
+  return null;
+}

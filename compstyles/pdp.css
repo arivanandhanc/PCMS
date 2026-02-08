@@ -1,0 +1,85 @@
+/* ===== PDP WRAPPER (blue theme background) ===== */
+.pdp-wrapper {
+  padding: 60px 80px;
+  background: #62b1e2;
+  color: #0d223c;
+  min-height: 70vh;
+}
+
+/* ===== White content card ===== */
+.pdp-card {
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 50px;
+  align-items: flex-start;
+}
+
+/* ===== Image section ===== */
+.pdp-image {
+  flex: 1 1 420px;
+  max-width: 520px;
+  object-fit: contain;
+}
+
+/* ===== Details section ===== */
+.pdp-details {
+  flex: 1 1 420px;
+}
+
+/* ===== Title ===== */
+.pdp-title {
+  font-size: 34px;
+  font-weight: 700;
+  margin-bottom: 18px;
+}
+
+/* ===== Description ===== */
+.pdp-description {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 28px;
+}
+
+/* ===== Button ===== */
+.pdp-button {
+  display: inline-block;
+  padding: 14px 32px;
+  background: #005bb5;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background 0.2s ease;
+}
+
+.pdp-button:hover {
+  background: #003f7f;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 900px) {
+  .pdp-wrapper {
+    padding: 30px 20px;
+  }
+
+  .pdp-card {
+    flex-direction: column;
+    padding: 24px;
+  }
+
+  .pdp-image {
+    max-width: 100%;
+  }
+}
+
+.pdp-button.primary {
+  background: #005bb5;
+}
+
+.pdp-button.secondary {
+  background: #555;
+}
