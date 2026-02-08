@@ -13,13 +13,9 @@ export default function CheckoutPage() {
   const [cart, setCart] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
 
-  // Load cart
   useEffect(() => {
     setCart(getCart());
-  }, []);
 
-  // Load Razorpay script once
-  useEffect(() => {
     const script = document.createElement("script");
     script.src = "https://checkout.razorpay.com/v1/checkout.js";
     script.async = true;
@@ -32,34 +28,36 @@ export default function CheckoutPage() {
     try {
       setLoading(true);
 
-      // 1️⃣ Create order from server
+      // 1️⃣ Ask server to create Razorpay order
       const res = await fetch("/api/create-order", {
         method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ amount: total }),
       });
 
-      const order = await res.json();
+      const data = await res.json();
 
-      // 2️⃣ Razorpay options
+      if (!res.ok) {
+        alert(data.error || "Failed to create order");
+        return;
+      }
+
+      // 2️⃣ Use ONLY data from server
       const options = {
-        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
-        amount: order.amount,
-        currency: "INR",
-        name: "Your Store",
+        key: data.key,                 // ✅ from API
+        amount: data.amount,
+        currency: data.currency,
+        order_id: data.orderId,
+        name: "CMS Store",
         description: "Order Payment",
-        order_id: order.id,
 
         handler: function (response: any) {
           alert("✅ Payment Successful!");
-
-          console.log("Razorpay Response:", response);
-
-          // Next step: send to API for Contentstack email
+          console.log("Payment response:", response);
+          // next: call API to send email / save order
         },
 
-        theme: {
-          color: "#005bb5",
-        },
+        theme: { color: "#005bb5" },
       };
 
       const rzp = new window.Razorpay(options);
@@ -72,8 +70,9 @@ export default function CheckoutPage() {
     }
   };
 
-  if (!cart.length)
+  if (!cart.length) {
     return <div style={{ padding: 60 }}>Cart is empty</div>;
+  }
 
   return (
     <div style={{ padding: 60 }}>
