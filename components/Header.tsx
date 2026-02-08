@@ -1,7 +1,10 @@
 
 "use client";
+import { useEffect, useState } from "react";
+import { getCartCount } from "@/lib/cart";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-import { useState } from "react";
 import "@/compstyles/Header.css";
 import type { Header as HeaderType } from "@/contentstack/generated";
 
@@ -11,7 +14,24 @@ type HeaderProps = {
 
 
 const Header = ({ header }: HeaderProps) => {
+  
+const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+const [count, setCount] = useState(0);
+const [mounted, setMounted] = useState(false);
+useEffect(() => {
+    setMounted(true); // runs only on client after hydration
+  }, []);
+
+ useEffect(() => {
+  if (!mounted) return;
+
+  const update = () => setCount(getCartCount());
+  update();
+
+  window.addEventListener("cart-updated", update);
+  return () => window.removeEventListener("cart-updated", update);
+}, [mounted]);
 
   const group = header.links_group;
 
@@ -22,6 +42,14 @@ const Header = ({ header }: HeaderProps) => {
         Boolean(link?.href && link?.title)
     ) ?? [];
 
+    // ✅ cart count listener
+  useEffect(() => {
+    const update = () => setCount(getCartCount());
+    update();
+
+    window.addEventListener("cart-updated", update);
+    return () => window.removeEventListener("cart-updated", update);
+  }, []);
   return (
     <header className="cs-header">
       <div className="cs-header__logo">
@@ -60,8 +88,16 @@ const Header = ({ header }: HeaderProps) => {
               <a href={link.href}>{link.title}</a>
             </li>
           ))}
+
+            {/* ✅ Cart hidden on home */}
+          {pathname !== "/" && (
+            <li className="cs-cart">
+              <Link href="/cart">🛒 Cart ({count})</Link>
+            </li>
+          )}
         </ul>
       </nav>
+      
     </header>
   );
 };

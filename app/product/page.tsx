@@ -12,31 +12,33 @@ export default async function ProductsPage() {
   );
 
   return (
-    <div className="plp-container">
-      <h1 className="plp-title">{plp.title}</h1>
+    <div className="plp">
+      <div className="plp-head">
+        <h1>{plp.title}</h1>
+      </div>
 
-      <div className="product-grid">
+      <div className="plp-grid">
         {products.map((product: any) => {
-          // ✅ handle BOTH shapes safely
           const imageUrl =
             product.product_image?.url ||
             product.product_image?.[0]?.url;
 
           return (
             <Link key={product.uid} href={`/product/${product.slug}`}>
-              <div className="product-card">
-                {imageUrl && (
-                  <img
-                    src={imageUrl}
-                    className="product-image"
-                    alt={product.title_of_the_product}
-                  />
-                )}
-                <h3 className="product-name">
-                  {product.title_of_the_product}
-                </h3>
-              </div>
-            </Link>
+  <div className="product-card">
+    {imageUrl && (
+      <img
+        src={imageUrl}
+        className="product-image"
+        alt={product.title_of_the_product}
+      />
+    )}
+    <h3 className="product-name">
+      {product.title_of_the_product}
+    </h3>
+  </div>
+</Link>
+
           );
         })}
       </div>

@@ -10,7 +10,6 @@ export default async function EcomPage(props: any) {
 
   return (
     <div>
-      <h1 style={{ padding: "40px 60px" }}>{page.title}</h1>
 
       {page.sections?.map((section: any, i: number) => (
         <SectionPrimary key={i} section={section} />

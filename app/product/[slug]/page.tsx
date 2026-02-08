@@ -1,16 +1,16 @@
 import "@/compstyles/pdp.css";
 import { getProductBySlug } from "@/lib/contentstack";
+import AddToCart from "@/components/AddToCart";
+
 
 export default async function ProductPage(props: any) {
   const { slug } = await props.params;
 
   const product: any = await getProductBySlug(slug);
-
   if (!product) return <div>Product not found</div>;
 
   const imageUrl = product.product_image?.url;
-
-  const showAddToCart = product.available_for_cart_; // ⭐ from your schema
+  const showAddToCart = product.available_for_cart_;
 
   return (
     <div className="pdp-wrapper">
@@ -33,12 +33,8 @@ export default async function ProductPage(props: any) {
           </p>
 
           {showAddToCart && (
-            <a
-              href="/add-to-cart"
-              className="pdp-button primary"
-            >
-              Add To Cart
-            </a>
+           <AddToCart product={product} />
+
           )}
         </div>
       </div>
