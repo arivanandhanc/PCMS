@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { getCart, removeFromCart } from "@/lib/cart";
+import "@/compstyles/checkout.css";
 
 declare global {
   interface Window {
@@ -11,16 +12,21 @@ declare global {
 
 export default function CheckoutPage() {
   const [cart, setCart] = useState<any[]>([]);
-  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setCart(getCart());
+
+    const update = () => setCart(getCart());
+    window.addEventListener("cart-updated", update);
 
     const script = document.createElement("script");
     script.src = "https://checkout.razorpay.com/v1/checkout.js";
     script.async = true;
     document.body.appendChild(script);
+
+    return () => window.removeEventListener("cart-updated", update);
   }, []);
 
   const total = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
@@ -34,7 +40,6 @@ export default function CheckoutPage() {
     try {
       setLoading(true);
 
-      // 1️⃣ Create Razorpay order from your server
       const res = await fetch("/api/create-order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -43,12 +48,6 @@ export default function CheckoutPage() {
 
       const data = await res.json();
 
-      if (!res.ok) {
-        alert(data.error || "Failed to create order");
-        return;
-      }
-
-      // 2️⃣ Razorpay options
       const options = {
         key: data.key,
         amount: data.amount,
@@ -56,9 +55,9 @@ export default function CheckoutPage() {
         order_id: data.orderId,
         name: "CMS Store",
         description: "Order Payment",
+        theme: { color: "#005bb5" },
 
-        handler: async function (response: any) {
-          // 3️⃣ Call your automation API AFTER payment success
+        handler: async (response: any) => {
           await fetch("/api/run-automation", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -72,82 +71,67 @@ export default function CheckoutPage() {
 
           alert("✅ Payment successful. Order email sent!");
         },
-
-        theme: { color: "#005bb5" },
       };
 
       const rzp = new window.Razorpay(options);
       rzp.open();
-    } catch (err) {
-      console.error(err);
-      alert("Payment failed to start");
     } finally {
       setLoading(false);
     }
   };
 
   if (!cart.length) {
-    return <div style={{ padding: 60 }}>Cart is empty</div>;
+    return <div className="checkout-empty">Your cart is empty</div>;
   }
 
   return (
-    <div style={{ padding: 60 }}>
-      <h1>Checkout</h1>
+    <div className="checkout">
+      <h1 className="checkout-title">Secure Checkout</h1>
 
-      {/* ✅ Email input */}
-      <div style={{ marginBottom: 30 }}>
+      {/* Email Card */}
+      <div className="checkout-email-card">
         <label>Email for order confirmation *</label>
         <input
           type="email"
-          required
+          placeholder="Enter your email address"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          style={{
-            padding: 12,
-            width: 320,
-            border: "1px solid #ccc",
-            marginTop: 8,
-            display: "block",
-          }}
         />
       </div>
 
-      {/* Cart items */}
-      {cart.map((item) => (
-        <div
-          key={item.uid}
-          style={{
-            marginBottom: 20,
-            display: "flex",
-            gap: 20,
-            alignItems: "center",
-          }}
-        >
-          <img src={item.image} width={80} />
-          <div>
-            <h3>{item.title}</h3>
-            <p>Qty: {item.qty}</p>
-            <p>₹ {item.price * item.qty}</p>
+      {/* Items */}
+      <div className="checkout-items">
+        {cart.map((item) => (
+          <div key={item.uid} className="checkout-item">
+            <img src={item.image} className="checkout-image" />
+
+            <div className="checkout-info">
+              <h3>{item.title}</h3>
+              <p>Qty: {item.qty}</p>
+              <p className="checkout-price">₹ {item.price * item.qty}</p>
+            </div>
+
+            <button
+              className="checkout-remove"
+              onClick={() => removeFromCart(item.uid)}
+            >
+              Remove
+            </button>
           </div>
-          <button onClick={() => removeFromCart(item.uid)}>
-            Remove
-          </button>
-        </div>
-      ))}
+        ))}
+      </div>
 
-      <h2>Total: ₹ {total}</h2>
+      {/* Total */}
+      <div className="checkout-total-card">
+        <div>Total Amount</div>
+        <strong>₹ {total}</strong>
+      </div>
 
+      {/* Pay */}
       <button
         onClick={handlePayment}
         disabled={loading}
-        style={{
-          padding: 20,
-          marginTop: 20,
-          background: "#005bb5",
-          color: "white",
-          border: "none",
-          cursor: "pointer",
-        }}
+        className="checkout-pay"
       >
         {loading ? "Processing..." : "Proceed to Payment"}
       </button>

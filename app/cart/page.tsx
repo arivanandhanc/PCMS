@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { getCart, removeFromCart } from "@/lib/cart";
+import "@/compstyles/cart.css";
 
 export default function CartPage() {
   const [cart, setCart] = useState<any[]>([]);
@@ -16,27 +17,38 @@ export default function CartPage() {
     return () => window.removeEventListener("cart-updated", update);
   }, []);
 
-  if (!cart.length) return <div style={{ padding: 40 }}>Cart is empty</div>;
+  if (!cart.length)
+    return <div className="cart-empty">Your cart is empty</div>;
 
   return (
-    <div style={{ padding: 40 }}>
-      <h1>Your Cart</h1>
+    <div className="cart">
+      <h1 className="cart-title">Your Cart</h1>
 
-      {cart.map((item) => (
-        <div key={item.uid} style={{ marginBottom: 20 }}>
-          <img src={item.image} width={120} />
-          <h3>{item.title}</h3>
+      <div className="cart-list">
+        {cart.map((item) => (
+          <div key={item.uid} className="cart-item">
+            <img src={item.image} className="cart-image" />
 
-          <Link href={`/product/${item.slug}`}>View</Link>
+            <div className="cart-info">
+              <h3>{item.title}</h3>
 
-          <button onClick={() => removeFromCart(item.uid)}>
-            Remove
-          </button>
-        </div>
-      ))}
+              <div className="cart-actions">
+                <Link href={`/product/${item.slug}`}>View product</Link>
+
+                <button
+                  className="cart-remove"
+                  onClick={() => removeFromCart(item.uid)}
+                >
+                  Remove
+                </button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
 
       <Link href="/checkout">
-        <button style={{ marginTop: 20 }}>Checkout</button>
+        <button className="cart-checkout">Proceed to Checkout</button>
       </Link>
     </div>
   );

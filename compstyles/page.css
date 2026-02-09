@@ -258,3 +258,7 @@
     transform: translateY(0);
   }
 }
+
+.cs-footer {
+  margin: 0;
+}

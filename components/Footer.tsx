@@ -1,8 +1,10 @@
 "use client";
 
+import "@/compstyles/page.css";
 import "@/compstyles/Footer.css";
 import type { Footer as FooterEntry } from "@/contentstack/generated";
 
+import "@/compstyles/Layout.css";
 type FooterProps = {
   footer: Pick<FooterEntry, "copyright" | "cta">;
 };

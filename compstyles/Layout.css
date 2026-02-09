@@ -6,3 +6,21 @@
 .cs-layout__main {
   flex: 1;
 }
+.cs-footer {
+  margin: 0;
+}
+
+
+.cs-layout {
+  min-height: 100vh;   /* ← the missing key */
+  display: flex;
+  flex-direction: column;
+}
+
+.cs-layout__main {
+  flex: 1;
+}
+
+.cs-footer {
+  margin: 0;
+}
