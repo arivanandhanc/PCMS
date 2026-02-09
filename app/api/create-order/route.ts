@@ -1,6 +1,5 @@
-// app/api/create-order/route.ts
-import Razorpay from "razorpay";
-import { NextResponse } from "next/server";
+const Razorpay = require("razorpay");
+const { NextResponse } = require("next/server");
 
 const razorpay = new Razorpay({
   key_id: process.env.RAZORPAY_KEY_ID!,       // server secret usage

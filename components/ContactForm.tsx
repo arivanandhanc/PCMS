@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import "@/compstyles/cscontact.css";
 
 export default function ContactForm() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
@@ -29,8 +30,8 @@ export default function ContactForm() {
   /* ✅ Beautiful success state */
   if (done) {
     return (
-      <div className="cs-success-card">
-        <div className="cs-success-icon">✓</div>
+      <div className="success-card">
+        <div className="success-icon">✓</div>
         <h3>Message Sent Successfully</h3>
         <p>Thanks for reaching out. We’ll get back to you soon.</p>
       </div>
@@ -38,11 +39,11 @@ export default function ContactForm() {
   }
 
   return (
-    <section className="cs-contact">
+    <section className="contact">
       <h2>Contact Us</h2>
       <p>Have questions? Send us a message.</p>
 
-      <form onSubmit={handleSubmit} className="cs-contact-form">
+      <form onSubmit={handleSubmit} className="contact-form">
         <input
           name="name"
           placeholder="Your name"

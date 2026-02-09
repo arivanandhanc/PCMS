@@ -55,8 +55,8 @@ export default function SectionPrimary({ section }: any) {
 
       {/* FORM BLOCK */}
       {section.form_needed_ && (
-        <section className="cs-form-section">
-          <div className="cs-page__content">
+        <section className="form-section">
+          <div className="page__content">
             <ContactForm />
           </div>
         </section>

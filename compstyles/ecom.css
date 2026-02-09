@@ -1,18 +1,20 @@
-/* COMMON */
+/* ================= COMMON ================= */
+
 .ecom-section {
-  padding: 80px 60px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 .ecom-inner {
   display: flex;
   align-items: center;
-  gap: 60px;
+  justify-content: center;
+  flex-wrap: wrap; /* important for responsiveness */
 }
 
-/* ------------------ OPTION 1 : BACKGROUND DIM CENTER ------------------ */
+/* ================= OPTION 1 : HERO OVERLAY ================= */
 
 .ecom-section.layout-overlay {
-  min-height: 85vh;
+  min-height: 92vh;
   background-size: cover;
   background-position: center;
   position: relative;
@@ -25,63 +27,87 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.55);
+  background: linear-gradient(rgba(0, 0, 0, 0.65),
+                              rgba(0, 0, 0, 0.55));
 }
 
 .ecom-section.layout-overlay .ecom-inner {
   position: relative;
   z-index: 2;
   text-align: center;
-  color: white;
-  max-width: 700px;
+  color: rgb(255, 255, 255);
+  max-width: 760px;
   flex-direction: column;
+  padding: 40px;
 }
 
-/* ------------------ OPTION 2 : IMAGE LEFT CONTENT RIGHT ------------------ */
+.ecom-section.layout-overlay .ecom-description {
+  font-size: 24px;
+  line-height: 1.6;
+  letter-spacing: 0.4px;
+  color: #f6f9fc;
 
-/* ------------------ OPTION 2 : IMAGE LEFT CONTENT RIGHT ------------------ */
+}
+
+/* ================= OPTION 2 : SPLIT LAYOUT ================= */
 
 .ecom-section.layout-split {
-  background: #f4f7fb;
-  display: flex;
-  justify-content: center;
+  padding: 0;
+  background: #f6f9fc;
 }
 
 .ecom-section.layout-split .ecom-inner {
-  max-width: 1200px;
   width: 100%;
-  justify-content: space-between;
+  gap: 0;
 }
 
 .ecom-section.layout-split .ecom-image {
-  flex: 0 0 520px;
+  flex: 0 0 50%;
+  overflow: hidden;
 }
 
 .ecom-section.layout-split .ecom-image img {
   width: 100%;
-  height: 320px;
-  border-radius: 14px;
+  height: 100%;
   object-fit: cover;
+  transition: transform 0.8s ease;
+  display: block;
+}
+
+.ecom-section.layout-split .ecom-image img:hover {
+  transform: scale(1.05);
 }
 
 .ecom-section.layout-split .ecom-content {
-  flex: 2;
-  padding-left: 60px;
+  flex: 0 0 50%;
+  padding: 100px 90px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-/* ------------------ CONTENT ------------------ */
+/* ================= CONTENT ================= */
 
 .ecom-description {
-  font-size: 20px;
-  margin-bottom: 20px;
+  font-size: 22px;
+  line-height: 1.8;
+  color: #2b2b2b;
+  margin-bottom: 36px;
+  max-width: 540px;
 }
 
+/* ================= BUTTONS ================= */
+
 .ecom-btn {
-  padding: 12px 28px;
-  text-decoration: none;
-  display: inline-block;
+  padding: 14px 36px;
+  font-size: 15px;
   font-weight: 600;
-  border-radius: 6px;
+  letter-spacing: 0.4px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  width: fit-content;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
 }
 
 .ecom-btn.white {
@@ -89,35 +115,111 @@
   color: black;
 }
 
+.ecom-btn.white:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.12);
+}
+
 .ecom-btn.Blue {
-  background: #005bb5;
+  background: linear-gradient(135deg, #005bb5, #007bff);
   color: white;
 }
 
-/* REMOVE SIDE WHITESPACE ONLY FOR SPLIT LAYOUT */
-
-.ecom-section.layout-split {
-  padding: 0;                 /* remove section padding */
-  background: #f4f7fb;
+.ecom-btn.Blue:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 34px rgba(0, 91, 181, 0.35);
 }
 
-.ecom-section.layout-split .ecom-inner {
-  max-width: 100%;
-  gap: 0;                     /* remove gap between image & content */
+/* ================= FORM SECTION POLISH ================= */
+
+.form-section {
+  background: linear-gradient(
+    105deg,
+    rgb(78, 125, 255),
+    rgba(46, 221, 212, 0.95)
+  );
+  padding: 100px 60px;
 }
 
-.ecom-section.layout-split .ecom-image {
-  flex: 0 0 50%;
+.page__content {
+  max-width: 820px;
+  margin: 0 auto;
 }
 
-.ecom-section.layout-split .ecom-image img {
-  width: 100%;
-  height: 100%;
-  border-radius: 0;           /* remove rounded corners */
-  object-fit: cover;
+/* ================= RESPONSIVE : TABLET ================= */
+
+@media (max-width: 1024px) {
+
+  .ecom-section.layout-split .ecom-content {
+    padding: 60px 40px;
+  }
+
+  .ecom-description {
+    font-size: 20px;
+  }
+
 }
 
-.ecom-section.layout-split .ecom-content {
-  flex: 0 0 50%;
-  padding: 80px 60px;         /* padding ONLY for text side */
+/* ================= RESPONSIVE : MOBILE ================= */
+
+@media (max-width: 768px) {
+
+  /* Split layout becomes vertical */
+  .ecom-section.layout-split .ecom-image,
+  .ecom-section.layout-split .ecom-content {
+    flex: 0 0 100%;
+    width: 100%;
+  }
+
+  .ecom-section.layout-split .ecom-content {
+    padding: 40px 24px;
+    text-align: center;
+    align-items: center;
+  }
+
+  .ecom-section.layout-split .ecom-image img {
+    height: 320px;
+  }
+
+  /* Hero overlay mobile fix */
+  .ecom-section.layout-overlay {
+    min-height: auto;
+    padding: 80px 20px;
+  }
+
+  .ecom-section.layout-overlay .ecom-inner {
+    padding: 20px;
+  }
+
+  .ecom-section.layout-overlay .ecom-description {
+    font-size: 20px;
+  }
+
+  /* Content text */
+  .ecom-description {
+    font-size: 18px;
+    max-width: 100%;
+  }
+
+  /* Buttons full width */
+  .ecom-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+}
+
+/* ================= RESPONSIVE : SMALL PHONES ================= */
+
+@media (max-width: 480px) {
+
+  .ecom-section.layout-split .ecom-image img {
+    height: 240px;
+  }
+
+  .ecom-description {
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
 }

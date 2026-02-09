@@ -1,0 +1,128 @@
+/* ===== Page Section ===== */
+
+.contact {
+  min-height: 50vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  text-align: center;
+}
+
+/* ===== Heading ===== */
+
+.contact h2 {
+  color: white;
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.contact p {
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 40px;
+  font-size: 16px;
+}
+
+/* ===== Form Card ===== */
+
+.contact-form {
+  width: 100%;
+  max-width: 720px;
+  background: linear-gradient(145deg, #0f172a, #0b1220);
+  padding: 48px;
+  border-radius: 20px;
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.35);
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+/* ===== Inputs ===== */
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 18px 20px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  font-size: 15px;
+  background: #f8fafc;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  box-shadow: 0 0 0 3px rgba(78, 125, 255, 0.35);
+}
+
+/* ===== Button ===== */
+
+.contact-form button {
+  margin-top: 10px;
+  padding: 16px;
+  border-radius: 10px;
+  border: none;
+  font-size: 15px;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(135deg, #3bb2ff, #6366f1);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.contact-form button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 35px rgba(59, 178, 255, 0.4);
+}
+
+.contact-form button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ===== Success Card ===== */
+
+.success-card {
+  max-width: 520px;
+  background: white;
+  padding: 60px 40px;
+  border-radius: 18px;
+  text-align: center;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.25);
+}
+
+.success-icon {
+  width: 70px;
+  height: 70px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  background: #22c55e;
+  color: white;
+  font-size: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===== Responsive ===== */
+
+@media (max-width: 768px) {
+  .contact h2 {
+    font-size: 28px;
+  }
+
+  .contact-form {
+    padding: 30px 22px;
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    padding: 14px 16px;
+  }
+}

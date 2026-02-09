@@ -14,6 +14,7 @@
       rgb(78, 125, 255),
       rgba(46, 221, 212, 0.95)
     );
+    max-height: 100vh;
 }
 
 .plp-head h1 {

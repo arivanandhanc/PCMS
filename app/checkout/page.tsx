@@ -12,6 +12,7 @@ declare global {
 export default function CheckoutPage() {
   const [cart, setCart] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState("");
 
   useEffect(() => {
     setCart(getCart());
@@ -25,10 +26,15 @@ export default function CheckoutPage() {
   const total = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
 
   const handlePayment = async () => {
+    if (!email) {
+      alert("Please enter email for order confirmation");
+      return;
+    }
+
     try {
       setLoading(true);
 
-      // 1️⃣ Ask server to create Razorpay order
+      // 1️⃣ Create Razorpay order from your server
       const res = await fetch("/api/create-order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -42,19 +48,29 @@ export default function CheckoutPage() {
         return;
       }
 
-      // 2️⃣ Use ONLY data from server
+      // 2️⃣ Razorpay options
       const options = {
-        key: data.key,                 // ✅ from API
+        key: data.key,
         amount: data.amount,
         currency: data.currency,
         order_id: data.orderId,
         name: "CMS Store",
         description: "Order Payment",
 
-        handler: function (response: any) {
-          alert("✅ Payment Successful!");
-          console.log("Payment response:", response);
-          // next: call API to send email / save order
+        handler: async function (response: any) {
+          // 3️⃣ Call your automation API AFTER payment success
+          await fetch("/api/run-automation", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              email,
+              total,
+              items: cart,
+              paymentId: response.razorpay_payment_id,
+            }),
+          });
+
+          alert("✅ Payment successful. Order email sent!");
         },
 
         theme: { color: "#005bb5" },
@@ -78,6 +94,25 @@ export default function CheckoutPage() {
     <div style={{ padding: 60 }}>
       <h1>Checkout</h1>
 
+      {/* ✅ Email input */}
+      <div style={{ marginBottom: 30 }}>
+        <label>Email for order confirmation *</label>
+        <input
+          type="email"
+          required
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          style={{
+            padding: 12,
+            width: 320,
+            border: "1px solid #ccc",
+            marginTop: 8,
+            display: "block",
+          }}
+        />
+      </div>
+
+      {/* Cart items */}
       {cart.map((item) => (
         <div
           key={item.uid}
