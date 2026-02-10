@@ -14,6 +14,7 @@ export default async function Home() {
     return (
       <div style={{ padding: "1rem", textAlign: "center" }}>
         ❌ No Page entry found for URL "/"
+        We can customise this page, 
       </div>
     );
   }

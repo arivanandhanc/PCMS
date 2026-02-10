@@ -90,7 +90,7 @@ useEffect(() => {
           ))}
 
             {/* ✅ Cart hidden on home */}
-          {pathname !== "/product" && (
+          {pathname == "/product" && (
             <li className="cs-cart">
               <Link href="/cart">🛒 Cart ({count})</Link>
             </li>
