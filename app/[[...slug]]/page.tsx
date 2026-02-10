@@ -1,15 +1,17 @@
 export const dynamic = "force-dynamic";
+
 import { getPage } from "@/lib/contentstack";
 import Page from "@/components/Page";
+
 export default async function SlugPage({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug?: string[] }>;
 }) {
-  // ✅ unwrap params FIRST
+  // ✅ MUST unwrap first
   const { slug } = await params;
 
-  const url = `/${slug}`;
+  const url = "/" + (slug?.join("/") ?? "");
 
   const page = await getPage(url);
 
