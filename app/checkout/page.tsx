@@ -1,9 +1,10 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getCart, removeFromCart } from "@/lib/cart";
 import "@/compstyles/checkout.css";
-
+import { clearCart } from "@/lib/cart";
 declare global {
   interface Window {
     Razorpay: any;
@@ -14,7 +15,8 @@ export default function CheckoutPage() {
   const [cart, setCart] = useState<any[]>([]);
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
-
+  
+const router = useRouter();
   useEffect(() => {
     setCart(getCart());
 
@@ -70,6 +72,10 @@ export default function CheckoutPage() {
           });
 
           alert("✅ Payment successful. Order email sent!");
+clearCart();
+window.dispatchEvent(new Event("cart-updated"));
+router.push("/products");
+
         },
       };
 
@@ -80,9 +86,70 @@ export default function CheckoutPage() {
     }
   };
 
-  if (!cart.length) {
-    return <div className="checkout-empty">Your cart is empty</div>;
-  }
+ if (!cart.length) {
+  return (
+    <div
+      style={{
+        minHeight: "80vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "2rem",
+        
+      }}
+    >
+      <div
+        style={{
+          textAlign: "center",
+          maxWidth: "520px",
+          width: "100%",
+          backdropFilter: "blur(6px)",
+          
+    border: "2px solid #000",   // 👈 black outline
+    padding: "28px",
+        }}
+      >
+        <div style={{ fontSize: "48px", marginBottom: "16px" }}>🛒</div>
+
+        <h2
+          style={{
+            fontSize: "26px",
+            fontWeight: 600,
+            marginBottom: "10px",
+          }}
+        >
+          Your cart is empty
+        </h2>
+
+        <p
+          style={{
+            fontSize: "15px",
+            lineHeight: 1.6,
+            marginBottom: "24px",
+          }}
+        >
+          You haven’t added any products yet. Start exploring and add items to
+          your cart.
+        </p>
+
+        <a
+          href="/product"
+          style={{
+            padding: "12px 24px",
+            borderRadius: "8px",
+            textDecoration: "none",
+            fontWeight: 600,
+            display: "inline-block",
+            border: "1px solid currentColor",
+          }}
+        >
+          Browse Products
+        </a>
+      </div>
+    </div>
+  );
+}
+
 
   return (
     <div className="checkout">
