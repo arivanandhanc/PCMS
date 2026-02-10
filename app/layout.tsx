@@ -1,24 +1,25 @@
 import "@/app/globals.css";
 import "@/compstyles/Layout.css";
-export const dynamic = "force-dynamic";
 import { getHeader, getFooter } from "@/lib/contentstack";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
+//this force dynamic have added to avoid static to serve duirng build
+export const dynamic = "force-dynamic";
+
 export default async function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
-}) {
-  const [headerEntry, footerEntry] = await Promise.all([
-    getHeader(),
-    getFooter(),
-  ]);
-
-  const header = headerEntry
-  ? {
-      links_group: headerEntry.links_group
-        ? {
+  children: React.ReactNode; // any react renderable content
+}) 
+{
+  //used array detruction and parellel fetcing
+  const [headerEntry, footerEntry] = await Promise.all([ getHeader(), getFooter(), ]);
+  // sanitising fetched data using data normalization to maintain strict data to match ui
+  const header = headerEntry? 
+  {
+      links_group: headerEntry.links_group? 
+      {
             links: Array.isArray(headerEntry.links_group.links)
               ? headerEntry.links_group.links
               : headerEntry.links_group.links
@@ -37,6 +38,7 @@ export default async function RootLayout({
       }
     : null;
 
+    //line 10 calls a next function which ensures the suitable pages wil fit inside this, and by default /
   return (
     <html lang="en">
       <body>
@@ -44,7 +46,7 @@ export default async function RootLayout({
           {header && <Header header={header} />}
 
           <main className="cs-layout__main">
-            {children}
+            {children} 
           </main>
 
           {footer && <Footer footer={footer} />}

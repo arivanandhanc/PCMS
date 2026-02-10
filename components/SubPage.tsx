@@ -2,7 +2,7 @@
 import Image from "next/image";
 import "@/compstyles/subpage.css";
 import type { SubPages } from "@/contentstack/generated";
-
+import { redirect } from "next/navigation";
 type SubPageProps = {
   page: Pick<
     SubPages,
@@ -11,14 +11,12 @@ type SubPageProps = {
 };
 
 export default function SubPage({ page }: SubPageProps) {
-  if (!page) {
-    return <div className="cs-empty">No sub page data</div>;
-  }
+  if (!page) redirect("/");
 
   const group = page.group;
 
   return (
-    <main className="one">
+    <main>
       <section className="cs-page__content">
   {group?.media?.map((item, idx) =>
     item.media?.url ? (

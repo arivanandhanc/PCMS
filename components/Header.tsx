@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { getCartCount } from "@/lib/cart";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
 import "@/compstyles/Header.css";
 import type { Header as HeaderType } from "@/contentstack/generated";
 
@@ -15,41 +14,36 @@ type HeaderProps = {
 
 const Header = ({ header }: HeaderProps) => {
   
-const pathname = usePathname();
+  const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
-const [count, setCount] = useState(0);
-const [mounted, setMounted] = useState(false);
-useEffect(() => {
-    setMounted(true); // runs only on client after hydration
-  }, []);
-
- useEffect(() => {
-  if (!mounted) return;
-
+  const [count, setCount] = useState(0);
+  const [mounted, setMounted] = useState(false);
   const update = () => setCount(getCartCount());
-  update();
-
-  window.addEventListener("cart-updated", update);
-  return () => window.removeEventListener("cart-updated", update);
-}, [mounted]);
-
   const group = header.links_group;
+    useEffect(() => {
+    setMounted(true); // runs only on client after hydration
+    }, []);
 
-  // ✅ UPDATED to match CT (no link1, links is array)
-  const links =
+    useEffect(() => {
+    if (!mounted) return;
+
+    
+    update();
+
+    window.addEventListener("cart-updated", update);
+    return () => window.removeEventListener("cart-updated", update);
+    }, [mounted]);
+
+  
+
+    const links =
     group?.links?.filter(
       (link): link is NonNullable<typeof link> =>
         Boolean(link?.href && link?.title)
     ) ?? [];
 
-    // ✅ cart count listener
-  useEffect(() => {
-    const update = () => setCount(getCartCount());
-    update();
+    
 
-    window.addEventListener("cart-updated", update);
-    return () => window.removeEventListener("cart-updated", update);
-  }, []);
   return (
     <header className="cs-header">
       <div className="cs-header__logo">

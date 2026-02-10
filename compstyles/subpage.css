@@ -4,11 +4,11 @@
 .cs-page__content {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 3rem 1.5rem;
+  padding: 5rem 0.5rem;
 
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 3rem;
+  gap: 5rem;
   align-items: start;
 }
 
@@ -41,7 +41,7 @@
   color: #222;
   font-weight: 600;
   padding: 1.5rem;     
-  border: 2px solid rgb(0, 0, 0);
+  border: 0.1px solid rgb(0, 0, 0);
 }
 
 /* =========================
@@ -61,6 +61,8 @@
 @media (max-width: 900px) {
   .cs-page__content {
     grid-template-columns: 1fr;
+    padding: 2rem 1.2rem; 
+    gap: 1rem;
   }
   .cs-page__content p{
     font-size: 1rem;
