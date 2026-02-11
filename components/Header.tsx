@@ -5,7 +5,7 @@ import { getCartCount } from "@/lib/cart";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import "@/compstyles/Header.css";
-import type { Header as HeaderType } from "@/contentstack/generated";
+import type { IHeader as HeaderType } from "@/contentstack/generated";
 
 type HeaderProps = {
   header: Pick<HeaderType, "links_group">;

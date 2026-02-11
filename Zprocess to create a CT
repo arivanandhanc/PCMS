@@ -1,0 +1,8 @@
+1 - Create a new Content Type (CT) in Contentstack for the homepage block.
+2 - Sync the TypeScript types (tsgen) and create a sample entry for this CT.
+3 - Create a new component in the codebase for this block.
+4 - Design and style the component as required.
+5 - Integrate the component where it needs to be rendered on the homepage.
+6 - If it represents a full page, define the route/path and create the corresponding structure in the Next.js app directory.
+7 - Test the implementation across different devices and screen sizes.
+

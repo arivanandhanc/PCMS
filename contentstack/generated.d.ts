@@ -1,5 +1,3 @@
-//to synce "csdx tsgen -a pcms -o \contentstack\generated.d.ts -p I --include-referenced-entry --include-system-fields "
-
 type BuildTuple<T, N extends number, R extends T[] = []> = R["length"] extends N
   ? R
   : BuildTuple<T, N, [...R, T]>;
@@ -10,14 +8,19 @@ type TuplePrefixes<T extends any[]> = T extends [any, ...infer Rest]
 
 type MaxTuple<T, N extends number> = TuplePrefixes<BuildTuple<T, N>>;
 
-export interface PublishDetails {
+export interface IReferencedEntry extends ISystemFields {
+  uid: string;
+  _content_type_uid: string;
+}
+
+export interface IPublishDetails {
   environment: string;
   locale: string;
   time: string;
   user: string;
 }
 
-export interface File {
+export interface IFile {
   uid: string;
   created_at: string;
   updated_at: string;
@@ -39,41 +42,91 @@ export interface File {
     height: number;
     width: number;
   };
-  publish_details: PublishDetails;
+  publish_details: IPublishDetails;
 }
 
-export interface Link {
+export interface ILink {
   title: string;
   href: string;
 }
 
-export interface Taxonomy {
+export interface ITaxonomy {
   taxonomy_uid: string;
   max_terms?: number;
   mandatory: boolean;
   non_localizable: boolean;
 }
 
-export type TaxonomyEntry = Taxonomy & { term_uid: string };
+export type ITaxonomyEntry = ITaxonomy & { term_uid: string };
 
-export interface Media {
+export interface ISystemFields {
+  uid?: string;
+  created_at?: string;
+  updated_at?: string;
+  created_by?: string;
+  updated_by?: string;
+  _content_type_uid?: string;
+  tags?: string[];
+  ACL?: any[];
+  _version?: number;
+  _in_progress?: boolean;
+  locale?: string;
+  publish_details?: IPublishDetails;
+  title?: string;
+}
+
+export type IModularBlocksExtension<T> = {
+  [P in keyof T]?: T[P] & { _metadata?: { uid?: string } };
+};
+
+export interface IPageElementPrimary {
+  /** Version */
+  _version?: number;
+  /** Background */
+  background?: IFile | null;
+  /** Button */
+  button?: IButton;
+  /** Description */
+  description?: string;
+  /** Form needed ? */
+  form_needed_: boolean;
+  /** Style */
+  style?:
+    | ("background-buttoon,text on top" | "image and elements side to side")
+    | null;
+}
+
+export interface IButton {
+  /** Version */
+  _version?: number;
+  /** Label */
+  label?: string;
+  /** URL */
+  url?: string;
+  /** Open in new tab */
+  open_in_new_tab: boolean;
+  /** Style */
+  style?: ("white" | "Blue") | null;
+}
+
+export interface IMedia {
   /** Version */
   _version?: number;
   /** Media */
-  media?: File | null;
+  media?: IFile | null;
 }
 
-export interface Cta {
+export interface ICta {
   /** Version */
   _version?: number;
   /** Name */
   name?: string;
   /** Link */
-  link?: Link;
+  link?: ILink;
 }
 
 /** A block! */
-export interface Block {
+export interface IBlock {
   /** Version */
   _version?: number;
   /** Title */
@@ -81,12 +134,102 @@ export interface Block {
   /** Copy */
   copy?: string;
   /** Image */
-  image?: File | null;
+  image?: IFile | null;
   /** Layout */
   layout?: ("image_left" | "image_right") | null;
 }
 
-export interface Tcaresol {
+export interface IImageDescriptionBlock extends ISystemFields {
+  /** Version */
+  _version?: number;
+  /** Title */
+  title: string;
+  /** Description */
+  description?: string;
+  /** Image */
+  image?: IFile | null;
+}
+
+export interface IEcomprimary extends ISystemFields {
+  /** Version */
+  _version?: number;
+  /** Title */
+  title: string;
+  /** URL */
+  url?: string;
+  /** sections */
+  sections?: IPageElementPrimary[];
+}
+
+export interface IPdp extends ISystemFields {
+  /** Version */
+  _version?: number;
+  /** Title */
+  title: string;
+  /** Product ID */
+  product_id?: number | null;
+  /** slug */
+  slug?: string;
+  /** Title of the product */
+  title_of_the_product?: string;
+  /** Product Image */
+  product_image?: IFile | null;
+  /** Product Descritpion */
+  product_descritpion?: string;
+  /** Product Price */
+  product_price?: number | null;
+  /** Available for cart ? */
+  available_for_cart_: boolean;
+}
+
+export interface IPlp extends ISystemFields {
+  /** Version */
+  _version?: number;
+  /** Title */
+  title: string;
+  /** Products */
+  products?: (IPdp | IReferencedEntry)[];
+}
+
+export interface INewblock extends ISystemFields {
+  /** Version */
+  _version?: number;
+  /** Title */
+  title: string;
+}
+
+export interface IContactForm extends ISystemFields {
+  /** Version */
+  _version?: number;
+  /** Name */
+  name: string;
+  /** Email */
+  email: string;
+  /** Message */
+  message: string;
+}
+
+export interface IFormIi extends ISystemFields {
+  /** Version */
+  _version?: number;
+  /** Title */
+  title: string;
+}
+
+export interface IForm extends ISystemFields {
+  /** Version */
+  _version?: number;
+  /** Title */
+  title: string;
+  /** Name */
+  name?: string;
+  /** Message */
+  message?: string;
+  /** Contact */
+  contact?: string;
+}
+
+export interface ITcaresol extends ISystemFields {
   /** Version */
   _version?: number;
   /** Title */
@@ -95,16 +238,16 @@ export interface Tcaresol {
   texts?: string[];
 }
 
-export interface Icaresol {
+export interface IIcaresol extends ISystemFields {
   /** Version */
   _version?: number;
   /** Title */
   title: string;
   /** Imiage */
-  imiage?: File[] | null;
+  imiage?: IFile[] | null;
 }
 
-export interface SubPages {
+export interface ISubPages extends ISystemFields {
   /** Version */
   _version?: number;
   /** Title */
@@ -116,7 +259,7 @@ export interface SubPages {
     /** Titlefield */
     titlefield?: string;
     /** Media */
-    media?: Media[];
+    media?: IMedia[];
     /** Descriptions */
     descriptions?: string[];
     /** Quote */
@@ -127,7 +270,7 @@ export interface SubPages {
 }
 
 /** Simple page with hero image or video */
-export interface Page {
+export interface IPage extends ISystemFields {
   /** Version */
   _version?: number;
   /** Title */
@@ -137,18 +280,22 @@ export interface Page {
   /** Description */
   description?: string;
   /** Hero Image */
-  hero_image?: File | null;
+  hero_image?: IFile | null;
   /** Hero Video */
-  hero_video?: File | null;
+  hero_video?: IFile | null;
   /** Caresol */
-  caresol?: Tcaresol[];
+  caresol?: (ITcaresol | IReferencedEntry)[];
+  /** Reference */
+  reference?: (IContactForm | IReferencedEntry)[];
   /** Body Text */
   body_text?: string;
   /** Body Text II */
   body_text2?: string;
+  /** image_description_block */
+  image_description_block?: (IImageDescriptionBlock | IReferencedEntry)[];
 }
 
-export interface Footer {
+export interface IFooter extends ISystemFields {
   /** Version */
   _version?: number;
   /** Footer */
@@ -156,22 +303,22 @@ export interface Footer {
   /** Copyright */
   copyright?: string;
   /** CTA */
-  cta?: Cta[];
+  cta?: ICta[];
 }
 
 /** This content type use to handle header content entry */
-export interface Header {
+export interface IHeader extends ISystemFields {
   /** Version */
   _version?: number;
   /** Header */
   title: string;
   /** Logo */
-  logo?: File | null;
+  logo?: IFile | null;
   /** URL */
   url?: string;
   /** Links Group */
   links_group?: {
     /** Links */
-    links?: Link[];
+    links?: ILink[];
   };
 }

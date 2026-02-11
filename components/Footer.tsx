@@ -2,7 +2,7 @@
 
 import "@/compstyles/page.css";
 import "@/compstyles/Footer.css";
-import type { Footer as FooterEntry } from "@/contentstack/generated";
+import type { IFooter as FooterEntry } from "@/contentstack/generated";
 
 import "@/compstyles/Layout.css";
 type FooterProps = {

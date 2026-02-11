@@ -2,7 +2,7 @@
 import contentstack, { QueryOperation } from "@contentstack/delivery-sdk";
 export const dynamic = "force-dynamic";
 import ContentstackLivePreview, { IStackSdk } from "@contentstack/live-preview-utils";
-import type { SubPages } from "@/contentstack/generated";
+import type { ISubPages } from "@/contentstack/generated";
 import { Page } from "./types";
 import { getContentstackEndpoints, getRegionForString } from "@timbenniks/contentstack-endpoints";
 
@@ -51,13 +51,13 @@ export async function getPage(url: string) {
 
 export async function getSubPage(
   url: string
-): Promise<SubPages | null> {
+): Promise<ISubPages | null> {
   const result = await stack
     .contentType("sub_pages")
     .entry()
     .query()
     .where("url", QueryOperation.EQUALS, url)
-    .find<SubPages>();
+    .find<ISubPages>();
 
   if (result.entries?.length) {
     const entry = result.entries[0];

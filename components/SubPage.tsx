@@ -1,11 +1,11 @@
 "use client";
 import Image from "next/image";
 import "@/compstyles/subpage.css";
-import type { SubPages } from "@/contentstack/generated";
+import type { ISubPages } from "@/contentstack/generated";
 import { redirect } from "next/navigation";
 type SubPageProps = {
   page: Pick<
-    SubPages,
+    ISubPages,
     "title" | "group" | "quote"
   > | null;
 };

@@ -1,11 +1,11 @@
 "use client";
 import "@/compstyles/tcaresol.css";
-import { Tcaresol } from "@/contentstack/generated";
+import { ITcaresol } from "@/contentstack/generated";
 import { decode } from "html-entities";
 
 
 
-const TcaresolComponent = (entry: Tcaresol) => {
+const TcaresolComponent = (entry: ITcaresol) => {
   const raw = entry.texts || [];
 
   // Convert RTE strings safely

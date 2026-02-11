@@ -1,11 +1,12 @@
 "use client";
 import Image from "next/image";
 import "@/compstyles/page.css";
-import type { Page as PageEntry } from "@/contentstack/generated";
-import { Tcaresol } from "@/contentstack/generated";
+import type { IPage as PageEntry } from "@/contentstack/generated";
+import { ITcaresol } from "@/contentstack/generated";
 import ContactForm from "@/components/ContactForm";
+import ImageDescriptionBlock from "@/components/ImageDescriptionBlock";
 
-// ⭐ You already have this file:
+
 import TcaresolComponent from "@/components/tcaresol";
 
 type PageProps = {
@@ -19,12 +20,22 @@ type PageProps = {
     | "body_text2"
     | "caresol"
   > & {
-    caresol?: Tcaresol[]; // typed correctly
+    caresol?: ITcaresol[]; 
   }) | null;
 };
 
+
+
+
 export default function Page({ page }: PageProps) {
   if (!page) return <div className="cs-empty">No page data found</div>;
+
+
+  const blocks = (page as any)?.modular_blocks || [];
+
+const imageBlock = blocks.find(
+  (b: any) => b.image_description_block
+)?.image_description_block;
 
   return (
     <main className="one">
@@ -82,6 +93,9 @@ export default function Page({ page }: PageProps) {
     ))
 )}
 
+{imageBlock && (
+  <ImageDescriptionBlock block={imageBlock} />
+)}
 
 
       {/* ---------------- IMAGE BLOCK ---------------- */}
@@ -105,6 +119,7 @@ export default function Page({ page }: PageProps) {
         <section className="cs-page__content">
           <div className="cs-richtext">{page.body_text2}</div>
         </section>
+        
         
       )}
     </main>
