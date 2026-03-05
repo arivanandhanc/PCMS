@@ -8,7 +8,7 @@ export default async function SlugPage({
 }: {
   params: Promise<{ slug?: string[] }>;
 }) {
-  // ✅ MUST unwrap first
+  
   const { slug } = await params;
 
   const url = "/" + (slug?.join("/") ?? "");

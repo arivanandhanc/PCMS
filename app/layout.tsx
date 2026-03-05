@@ -41,6 +41,10 @@ export default async function RootLayout({
     //line 10 calls a next function which ensures the suitable pages wil fit inside this, and by default /
   return (
     <html lang="en">
+    <head>
+    <script src="https://web.cmp.usercentrics.eu/modules/autoblocker.js"></script>
+    <script id="usercentrics-cmp" src="https://web.cmp.usercentrics.eu/ui/loader.js" data-settings-id="XwMk8JmpLbUtJa" async></script>
+    </head>
       <body>
         <div className="cs-layout">
           {header && <Header header={header} />}
